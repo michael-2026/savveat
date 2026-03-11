@@ -904,20 +904,15 @@ function selectRole(r) {
   role = r;
   const helper   = document.getElementById('rcard-helper');
   const employer = document.getElementById('rcard-employer');
-  // Reset both
-  helper.style.background   = '';
-  employer.style.background = '';
-  helper.querySelectorAll('h3,p').forEach(el => el.style.color = '');
-  employer.querySelectorAll('h3,p').forEach(el => el.style.color = '');
-  helper.style.opacity   = '1';
-  employer.style.opacity = '1';
-  // Style selected
-  const selected = r === 'helper' ? helper : employer;
-  const other    = r === 'helper' ? employer : helper;
-  selected.style.background = '#e8533a';
-  selected.querySelectorAll('h3,p').forEach(el => el.style.color = '#fff');
-  other.style.opacity = '0.55';
+  if (!helper || !employer) return;
+  helper.style.opacity      = r === 'helper'   ? '1' : '0.45';
+  employer.style.opacity    = r === 'employer' ? '1' : '0.45';
+  helper.style.border       = r === 'helper'   ? '3px solid #e8533a' : '3px solid transparent';
+  employer.style.border     = r === 'employer' ? '3px solid #e8533a' : '3px solid transparent';
+  helper.style.boxShadow    = r === 'helper'   ? '0 0 0 6px rgba(232,83,58,0.12)' : '';
+  employer.style.boxShadow  = r === 'employer' ? '0 0 0 6px rgba(232,83,58,0.12)' : '';
 }
+
 function confirmRole() {
   if (!role) selectRole('employer');
   applyRole(role);
@@ -925,23 +920,31 @@ function confirmRole() {
 }
 function applyRole(r) {
   const pill = document.getElementById('role-pill');
-  pill.classList.remove('hidden');
+  if (pill) {
+    pill.classList.remove('hidden');
+    pill.textContent = r === 'employer' ? 'Employer' : 'Helper';
+    pill.className   = r === 'employer' ? 'role-pill employer' : 'role-pill helper';
+  }
+  const calAdd  = document.getElementById('cal-add-block');
+  const calNote = document.getElementById('helper-cal-note');
+  const pName   = document.getElementById('profile-name');
+  const pSub    = document.getElementById('profile-sub');
+  const pAv     = document.getElementById('profile-avatar');
+  const pPref   = document.getElementById('pref-row');
   if (r === 'employer') {
-    pill.textContent = 'Employer'; pill.className = 'role-pill employer';
-    document.getElementById('cal-add-block').classList.remove('hidden');
-    document.getElementById('helper-cal-note').classList.add('hidden');
-    document.getElementById('profile-name').textContent = 'Employer Account';
-    document.getElementById('profile-sub').textContent  = 'Employer · Premium';
-    document.getElementById('profile-avatar').style.background = '#1976d2';
-    document.getElementById('pref-row').style.display = 'flex';
+    if (calAdd)  calAdd.classList.remove('hidden');
+    if (calNote) calNote.classList.add('hidden');
+    if (pName)   pName.textContent = 'Employer Account';
+    if (pSub)    pSub.textContent  = 'Employer · Premium';
+    if (pAv)     pAv.style.background = '#1976d2';
+    if (pPref)   pPref.style.display = 'flex';
   } else {
-    pill.textContent = 'Helper'; pill.className = 'role-pill helper';
-    document.getElementById('cal-add-block').classList.add('hidden');
-    document.getElementById('helper-cal-note').classList.remove('hidden');
-    document.getElementById('profile-name').textContent = 'Helper Account';
-    document.getElementById('profile-sub').textContent  = 'Helper · Standard';
-    document.getElementById('profile-avatar').style.background = '#388e3c';
-    document.getElementById('pref-row').style.display = 'none';
+    if (calAdd)  calAdd.classList.add('hidden');
+    if (calNote) calNote.classList.remove('hidden');
+    if (pName)   pName.textContent = 'Helper Account';
+    if (pSub)    pSub.textContent  = 'Helper · Standard';
+    if (pAv)     pAv.style.background = '#388e3c';
+    if (pPref)   pPref.style.display = 'none';
   }
 }
 function switchRole() {
