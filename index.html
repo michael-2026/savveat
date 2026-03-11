@@ -567,7 +567,7 @@ html, body {
         <button class="ghost-btn">＋</button>
       </div>
       <div class="meal-scroll">
-        <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
+        <div class="mcard" onclick="navTo('screen-recipe-detail-1','nav-recipe')">
           <img src="images/Chinese_Eggplant_with_Minced_Pork.png" alt="Lunch">
           <div class="mcard-icon">🍚</div>
           <div class="mcard-lbl">Lunch</div>
@@ -591,12 +591,12 @@ html, body {
         <div class="meal-row">
           <div class="mdot" style="background:#2ab5a5"></div>
           <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
-          <div class="del-btn">🗑</div>
+          <div class="del-btn"> </div>
         </div>
         <div class="meal-row">
           <div class="mdot" style="background:#f5a623"></div>
           <div class="meal-row-text">Grilled Steak with Asparagus</div>
-          <div class="del-btn">🗑</div>
+          <div class="del-btn"> </div>
         </div>
         <div class="day-lbl today" data-day="Fri_13">Fri 13</div>
         <div class="meal-row">
@@ -633,7 +633,7 @@ html, body {
           <div class="rgcard-info"><div class="rgcard-name">Japanese Miso Soup with Tofu</div><span class="rgcard-tag">Japanese</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
-          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="">
+          <img src="images/Chinese_Eggplant_with_Minced_Pork.png" alt="">
           <div class="rgcard-info"><div class="rgcard-name">Chinese Eggplant with Minced Pork</div><span class="rgcard-tag">Hong Kong Local</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
@@ -658,8 +658,8 @@ html, body {
         <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
       </div>
       <div class="role-tabs-bar">
-        <button class="rtab on">Chinese Eggplant with Minced Pork</button>
-        <button class="rtab off">Grilled Steak with Asparagus</button>
+        <button class="rtab on" onclick="navTo('screen-recipe-detail-1','nav-home')">Chinese Eggplant with Minced Pork</button>
+        <button class="rtab off" onclick="navTo('screen-recipe-detail','nav-home')">Grilled Steak with Asparagus</button>
       </div>
       <div class="detail-card">
         <div class="detail-title">Chinese Eggplant with Minced Pork<span class="detail-menu">···</span></div>
@@ -713,8 +713,8 @@ html, body {
         <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
       </div>
       <div class="role-tabs-bar">
-        <button class="rtab off">Chinese Eggplant with Minced Pork</button>
-        <button class="rtab on">Grilled Steak with Asparagus</button>
+        <button class="rtab off" onclick="navTo('screen-recipe-detail-1','nav-home')">Chinese Eggplant with Minced Pork</button>
+        <button class="rtab on" onclick="navTo('screen-recipe-detail','nav-home')">Grilled Steak with Asparagus</button>
       </div>
       <div class="detail-card">
         <div class="detail-title">Grilled Steak with Asparagus<span class="detail-menu">···</span></div>
@@ -822,7 +822,7 @@ html, body {
         </div>
         <div class="trans-card">
           <div class="trans-inner">
-            <img class="trans-photo" src="imges/Cherry_Tomatoes.png" alt="">
+            <img class="trans-photo" src="images/Cherry_Tomatoes.png" alt="">
             <div><div class="trans-zh">車厘茄</div><div class="trans-en">Cherry tomatoes</div><div class="trans-loc">Tomat ceri</div></div>
           </div>
         </div>
