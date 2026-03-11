@@ -179,7 +179,7 @@ html, body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 .day-lbl { padding: 12px 16px 4px; font-size: 14px; font-weight: 800; color: #1a1a1a; }
-.day-lbl.today { color: #e8533a; }
+.day-lbl.today { color: #1a1a1a; }
 .meal-row {
   display: flex; align-items: center; padding: 11px 16px;
   border-bottom: 1px solid #f8f8f8; gap: 10px;
@@ -242,10 +242,10 @@ html, body {
    EMPLOYER RECIPE DETAIL
 ════════════════════ */
 #screen-recipe-detail { background: #faf7f4; }
-.thumb-scroll { display: flex; gap: 10px; padding: 0 16px 12px; overflow-x: auto; }
+.thumb-scroll { display: flex; gap: 10px; padding: 0 16px 12px; flex-wrap: wrap; }
 .thumb-scroll::-webkit-scrollbar { display: none; }
 .rthumb {
-  flex-shrink: 0; width: 110px; border-radius: 14px; overflow: hidden;
+  flex-shrink: 0; flex: 1 1 calc(25% - 10px); min-width: 90px; border-radius: 14px; overflow: hidden;
   cursor: pointer; transition: transform 0.15s; background: #fff;
 }
 .rthumb.selected { outline: 3px solid #e8533a; }
@@ -320,7 +320,7 @@ html, body {
 #screen-helper-home { background: #faf7f4; }
 .helper-banner {
   margin: 14px 16px 4px;
-  background: linear-gradient(135deg, #43a047, #2e7d32);
+  background: #41b0b7;
   border-radius: 18px; padding: 16px 18px; color: #fff;
   display: flex; align-items: center; gap: 14px;
 }
@@ -347,9 +347,9 @@ html, body {
   font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 10px;
   text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; width: 72px; text-align: center;
 }
-.type-badge.b { background: #e8f5e9; color: #388e3c; }
-.type-badge.l { background: #fff8e1; color: #f57c00; }
-.type-badge.d { background: #fde8e4; color: #e8533a; }
+.type-badge.b { background: #f5f8fa; color: #1a1a1a; }
+.type-badge.l { background: #f5f8fa; color: #1a1a1a; }
+.type-badge.d { background: #f5f8fa; color: #1a1a1a; }
 .plan-name  { flex: 1; font-size: 14px; font-weight: 700; color: #333; }
 .plan-arrow { font-size: 16px; color: #ccc; }
 .quick-btns { display: flex; gap: 10px; padding: 2px 16px 14px; }
@@ -555,7 +555,7 @@ html, body {
           </div>
         </div>
       </div>
-      <button class="next-btn" onclick="confirmRole()">Next Steps</button>
+      <button class="next-btn" onclick="confirmRole()">Continue</button>
       <p class="signin-link">Sign in with existing account</p>
     </div>
 
@@ -563,16 +563,11 @@ html, body {
     <div class="screen" id="screen-employer-home">
       <div class="section-row">
         <h2>Today's Meal</h2>
-        <button class="ghost-btn" onclick="navTo('screen-meal-select','nav-recipe')">＋</button>
+        <button class="ghost-btn">＋</button>
       </div>
       <div class="meal-scroll">
         <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
-          <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&q=80" alt="Breakfast">
-          <div class="mcard-icon">🥣</div>
-          <div class="mcard-lbl">Breakfast</div>
-        </div>
-        <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80" alt="Lunch">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="Lunch">
           <div class="mcard-icon">🍚</div>
           <div class="mcard-lbl">Lunch</div>
         </div>
@@ -581,30 +576,25 @@ html, body {
           <div class="mcard-icon">🍽️</div>
           <div class="mcard-lbl">Dinner</div>
         </div>
-        <div class="mcard-add" onclick="navTo('screen-meal-select','nav-recipe')">
+        <div class="mcard-add">
           <span>＋</span><small>Add meal</small>
         </div>
       </div>
-      <button class="grocery-btn" onclick="navTo('screen-recipe-detail','nav-recipe')">🛒 Check My Grocery List</button>
+      <button class="grocery-btn" onclick="navTo('screen-recipe-detail','nav-recipe')">Check My Upcoming Meal</button>
       <div class="section-row">
         <h3>Weekly Meal Plan</h3>
-        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">✏️</button>
+        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">✎</button>
       </div>
       <div class="weekly-card">
         <div class="day-lbl">Sat 17</div>
         <div class="meal-row">
           <div class="mdot" style="background:#2ab5a5"></div>
-          <div class="meal-row-text">Satay Beef Noodles</div>
+          <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
           <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
         </div>
         <div class="meal-row">
           <div class="mdot" style="background:#f5a623"></div>
-          <div class="meal-row-text">Japanese Curry Pork Chop Rice</div>
-          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
-        </div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#8b5e3c"></div>
-          <div class="meal-row-text">Toast with Coffee</div>
+          <div class="meal-row-text">Grilled Steak with Asparagus</div>
           <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
         </div>
         <div class="add-row" onclick="navTo('screen-meal-select','nav-recipe')">
@@ -628,6 +618,7 @@ html, body {
       </div>
       <div class="filter-row">
         <button class="fchip on"  onclick="filterChip(this)">All</button>
+        <button class="fchip off" onclick="filterChip(this)">Hong Kong Local 🇭🇰</button>
         <button class="fchip off" onclick="filterChip(this)">Chinese 🇨🇳</button>
         <button class="fchip off" onclick="filterChip(this)">Japanese 🇯🇵</button>
         <button class="fchip off" onclick="filterChip(this)">Western 🌍</button>
@@ -644,11 +635,11 @@ html, body {
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Chinese Eggplant with Minced Pork</div><span class="rgcard-tag">Chinese</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Chinese Eggplant with Minced Pork</div><span class="rgcard-tag">Hong Kong Local</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Fried Rice Noodle with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Fried Rice with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" alt="">
@@ -656,7 +647,7 @@ html, body {
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Satay Beef Noodles</div><span class="rgcard-tag">HK Local</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Curry Pork Chop Rice</div><span class="rgcard-tag">Japanese</span></div>
         </div>
       </div>
       <button class="add-plan-btn" onclick="addToPlan()">＋ Add to Meal Plan</button>
@@ -665,28 +656,16 @@ html, body {
     <!-- ════ EMPLOYER RECIPE DETAIL ════ -->
     <div class="screen" id="screen-recipe-detail">
       <div class="back-bar" onclick="navTo('screen-employer-home','nav-home')">
-        <span class="back-arrow">‹</span><h2>Today's Dinner</h2>
+        <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
       </div>
       <div class="thumb-scroll">
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Fried rice noodle with shrimp</div>
-        </div>
         <div class="rthumb selected" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Grilled Steak (with Asparagus)</div>
-        </div>
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Japanese Miso Soup with Tofu</div>
-        </div>
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Chinese Eggplant with Minced Pork</div>
+          <img src=https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80" alt="">
+          <div class="rthumb-lbl">Grilled Steak with Asparagus</div>
         </div>
       </div>
       <div class="detail-card">
-        <div class="detail-title">Grilled Steak <span class="detail-menu">···</span></div>
+        <div class="detail-title">Grilled Steak with Asparagus<span class="detail-menu">···</span></div>
         <div class="tab-bar">
           <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-ov')">Overview</button>
           <button class="tab-btn on"  onclick="switchDetailTab(this,'dtab-ing')">Ingredients</button>
@@ -727,7 +706,7 @@ html, body {
           </div>
         </div>
       </div>
-      <button class="share-btn" onclick="showToast('📤 Shopping list shared with your Helper!')">📤 Share List with Helper</button>
+      <button class="share-btn" onclick="showToast('✅ Shared with your helper!')">Share with My Helper</button>
     </div>
 
     <!-- ════ HELPER HOME ════ -->
@@ -746,18 +725,13 @@ html, body {
       </div>
       <div class="today-plan-card">
         <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
-          <div class="type-badge b">Breakfast</div>
-          <div class="plan-name">Yogurt Bowl with Blueberries</div>
-          <div class="plan-arrow">›</div>
-        </div>
-        <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
           <div class="type-badge l">Lunch</div>
-          <div class="plan-name">Japanese Curry Pork Chop Rice</div>
+          <div class="plan-name">Chinese Eggplant with Minced Pork</div>
           <div class="plan-arrow">›</div>
         </div>
         <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
           <div class="type-badge d">Dinner</div>
-          <div class="plan-name">Grilled Steak (with Asparagus)</div>
+          <div class="plan-name">Grilled Steak with Asparagus</div>
           <div class="plan-arrow">›</div>
         </div>
       </div>
@@ -768,8 +742,8 @@ html, body {
       <div class="section-row"><h3>Upcoming</h3></div>
       <div class="weekly-card">
         <div class="day-lbl">Mon 19</div>
-        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Satay Beef Noodles</div><span>🍜</span></div>
-        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Japanese Curry Pork Chop Rice</div><span>🍛</span></div>
+        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Chinese Eggplant with Minced Pork</div><span>🍜</span></div>
+        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak with Asparagus</div><span>🍛</span></div>
       </div>
     </div>
 
@@ -782,7 +756,7 @@ html, body {
       <div class="meal-banner">
         <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=300&q=80" alt="">
         <div>
-          <div class="meal-banner-name">Grilled Steak (with Asparagus)</div>
+          <div class="meal-banner-name">Grilled Steak with Asparagus</div>
           <div class="meal-banner-sub">Tap an ingredient for translation</div>
         </div>
       </div>
@@ -866,18 +840,17 @@ html, body {
         👁 Read only — your employer manages the meal plan
       </div>
       <div class="cal-week">
-        <div class="cal-day"><div class="cdn">MON</div><div class="cdnum">12</div></div>
-        <div class="cal-day"><div class="cdn">TUE</div><div class="cdnum">13</div><div class="cdot"></div></div>
-        <div class="cal-day"><div class="cdn">WED</div><div class="cdnum">14</div></div>
-        <div class="cal-day"><div class="cdn">THU</div><div class="cdnum">15</div><div class="cdot"></div></div>
-        <div class="cal-day"><div class="cdn">FRI</div><div class="cdnum">16</div><div class="cdot"></div></div>
-        <div class="cal-day"><div class="cdn">SAT</div><div class="cdnum">17</div><div class="cdot"></div></div>
-        <div class="cal-day today"><div class="cdn">SUN</div><div class="cdnum">18</div><div class="cdot"></div></div>
+        <div class="cal-day today"><div class="cdn">THU</div><div class="cdnum">12</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">FRI</div><div class="cdnum">13</div></div>
+        <div class="cal-day"><div class="cdn">SAT</div><div class="cdnum">14</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">SUN</div><div class="cdnum">15</div></div>
+        <div class="cal-day"><div class="cdn">MON</div><div class="cdnum">16</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">TUE</div><div class="cdnum">17</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">WED</div><div class="cdnum">18</div><div class="cdot"></div></div>
       </div>
       <div class="cal-meals">
-        <div class="cal-block"><div class="cal-type b">Breakfast</div><div class="cal-name">Yogurt Bowl with Blueberries</div></div>
-        <div class="cal-block"><div class="cal-type l">Lunch</div><div class="cal-name">Japanese Curry Pork Chop Rice</div></div>
-        <div class="cal-block"><div class="cal-type d">Dinner</div><div class="cal-name">Grilled Steak (with Asparagus)</div></div>
+        <div class="cal-block"><div class="cal-type l">Lunch</div><div class="cal-name">Chinese Eggplant with Minced Pork</div></div>
+        <div class="cal-block"><div class="cal-type d">Dinner</div><div class="cal-name">Grilled Steak with Asparagus</div></div>
         <div class="cal-block" id="cal-add-block">
           <div class="cal-empty" onclick="navTo('screen-meal-select','nav-recipe')">＋ Add a meal</div>
         </div>
@@ -901,7 +874,7 @@ html, body {
           <div class="settings-row">Language <span>English ›</span></div>
           <div class="settings-row">Notifications <span>On ›</span></div>
         </div>
-        <button class="switch-role-btn" onclick="switchRole()">🔄 Switch Role</button>
+        <button class="switch-role-btn" onclick="switchRole()">Switch Role</button>
       </div>
     </div>
 
@@ -917,7 +890,7 @@ html, body {
     <button class="nav-btn" id="nav-cal" onclick="navTo('screen-calendar','nav-cal')">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
     </button>
-    <button class="nav-btn" id="nav-recipe" onclick="navTo(recipeScreen(),'nav-recipe')">
+    <button class="nav-btn" id="nav-recipe" onclick="navTo('screen-meal-select','nav-recipe')">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03zM1.02 17h15v2h-15z"/></svg>
     </button>
     <button class="nav-btn" id="nav-grocery" onclick="navTo(groceryScreen(),'nav-grocery')">
@@ -1060,9 +1033,11 @@ function toggleShop(item) {
 /* Recipe thumbs & grid */
 function pickThumb(el) {
   document.querySelectorAll('.rthumb').forEach(t => t.classList.remove('selected'));
-  el.classList.add('selected');
+  card.classList.add('picked');
 }
-function togglePick(card) { card.classList.toggle('picked'); }
+function togglePick(card) {
+  document.querySelectorAll('.rgcard').forEach(c => c.classList.remove('picked'));
+  card.classList.toggle('picked'); }
 function filterChip(btn) {
   document.querySelectorAll('.fchip').forEach(c => c.className = 'fchip off');
   btn.className = 'fchip on';
