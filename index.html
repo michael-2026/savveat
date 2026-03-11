@@ -478,6 +478,8 @@ html, body {
   padding: 13px 14px; font-size: 13px; color: #bbb;
   display: flex; align-items: center; gap: 8px; cursor: pointer;
 }
+.cal-day.selected-day { background: #fde8e4; color: #e8533a; }
+.cal-type.a { color: #888; font-style: italic; }
 
 /* ════════════════════
    PROFILE
@@ -586,31 +588,7 @@ html, body {
         <h3>Weekly Meal Plan</h3>
         <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">›</button>
       </div>
-      <div class="weekly-card">
-        <div class="day-lbl">Sat 17</div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#2ab5a5"></div>
-          <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
-          <div class="del-btn">🗑</div>
-        </div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#f5a623"></div>
-          <div class="meal-row-text">Grilled Steak with Asparagus</div>
-          <div class="del-btn">🗑</div>
-        </div>
-        <div class="add-row">
-          <span>＋</span> Add meal to Thu 12
-        </div>
-        <div class="day-lbl today">Sun 18</div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#ddd"></div>
-          <div class="meal-row-text" style="color:#bbb">Rigatoni Pasta with Cream Sauce</div>
-          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
-        </div>
-        <div class="add-row" onclick="navTo('screen-meal-select','nav-recipe')">
-          <span>＋</span> Add meal to Fri 13
-        </div>
-      </div>
+      <div class="weekly-card" id="employer-weekly-card"></div>
     </div>
 
     <!-- ════ EMPLOYER MEAL SELECT ════ -->
@@ -740,11 +718,7 @@ html, body {
         <button class="qbtn recs"  onclick="navTo('screen-helper-recipe','nav-recipe')">📖 View Recipes</button>
       </div>
       <div class="section-row"><h3>Upcoming</h3></div>
-      <div class="weekly-card">
-        <div class="day-lbl">Mon 19</div>
-        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Chinese Eggplant with Minced Pork</div><span>🍜</span></div>
-        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak with Asparagus</div><span>🍛</span></div>
-      </div>
+      <div class="weekly-card" id="helper-weekly-card"></div>
     </div>
 
     <!-- ════ HELPER SHOPPING LIST ════ -->
@@ -848,12 +822,7 @@ html, body {
         <div class="cal-day"><div class="cdn">TUE</div><div class="cdnum">17</div></div>
         <div class="cal-day"><div class="cdn">WED</div><div class="cdnum">18</div><div class="cdot"></div></div>
       </div>
-      <div class="cal-meals">
-        <div class="cal-block"><div class="cal-type a">Unassiged</div><div class="cal-name">Rigatoni Pasta with Cream Sauce</div></div>
-        <div class="cal-block" id="cal-add-block">
-          <div class="cal-empty" onclick="navTo('screen-meal-select','nav-recipe')">＋ Add a meal</div>
-        </div>
-      </div>
+      <div class="cal-meals" id="cal-meals-container"></div>
     </div>
 
     <!-- ════ PROFILE ════ -->
@@ -1098,5 +1067,278 @@ function showToast(msg) {
 })();
 </script>
 
+<script>
+/* ══════════════════════════════════════════════
+   SAVVEAT — SHARED MEAL PLAN DATA STORE
+   Single source of truth synced across:
+   → Employer Home  → Helper Home  → Calendar
+══════════════════════════════════════════════ */
+
+const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function dayLabel(offset) {
+  const d = new Date(); d.setDate(d.getDate() + offset);
+  return DAY_NAMES[d.getDay()] + ' ' + d.getDate();
+}
+
+/* ── Shared store  { "Thu 12": ["Rigatoni Pasta...", ...] } ── */
+const mealPlan = {};
+(function seedDays() {
+  for (let i = 0; i < 7; i++) mealPlan[dayLabel(i)] = [];
+  mealPlan[dayLabel(0)] = ['Satay Beef Noodles', 'Japanese Curry Pork Chop Rice', 'Toast with Coffee'];
+})();
+
+let pendingDay    = dayLabel(0);   // day chosen when "Add meal to X" is tapped
+let selectedCalDay = dayLabel(0);  // currently viewed calendar day
+
+const DOTS = ['#2ab5a5','#f5a623','#e8533a','#1976d2','#8b5e3c','#9c27b0','#43a047'];
+function dotColor(i) { return DOTS[i % DOTS.length]; }
+
+/* ══════════════════════════
+   RENDER: EMPLOYER WEEKLY CARD
+══════════════════════════ */
+function renderEmployerWeekly() {
+  const card = document.getElementById('employer-weekly-card');
+  if (!card) return;
+  let h = '';
+  Object.keys(mealPlan).forEach((day, di) => {
+    h += '<div class="day-lbl' + (di === 0 ? ' today' : '') + '">' + day + '</div>';
+    const meals = mealPlan[day];
+    if (meals.length === 0) {
+      h += '<div class="meal-row">'
+         + '<div class="mdot" style="background:#ddd"></div>'
+         + '<div class="meal-row-text" style="color:#bbb">— No meal planned —</div>'
+         + '</div>';
+    } else {
+      meals.forEach((meal, mi) => {
+        h += '<div class="meal-row" data-day="' + day + '" data-meal="' + meal.replace(/"/g,'&quot;') + '">'
+           + '<div class="mdot" style="background:' + dotColor(mi) + '"></div>'
+           + '<div class="meal-row-text">' + meal + '</div>'
+           + '<div class="del-btn" onclick="deleteMeal(this)">🗑</div>'
+           + '</div>';
+      });
+    }
+    h += '<div class="add-row" onclick="openMealSelect(\'' + day.replace(/'/g,"\\'") + '\')">'
+       + '<span>＋</span> Add meal to ' + day + '</div>';
+  });
+  card.innerHTML = h;
+}
+
+/* ══════════════════════════
+   RENDER: HELPER WEEKLY CARD (read-only)
+══════════════════════════ */
+function renderHelperWeekly() {
+  const card = document.getElementById('helper-weekly-card');
+  if (!card) return;
+  let h = '';
+  const days = Object.keys(mealPlan).slice(1); // skip today
+  if (days.length === 0) {
+    h = '<div class="meal-row"><div class="meal-row-text" style="color:#bbb;padding:12px 16px;">No upcoming meals planned.</div></div>';
+  } else {
+    days.forEach(day => {
+      h += '<div class="day-lbl">' + day + '</div>';
+      const meals = mealPlan[day];
+      if (meals.length === 0) {
+        h += '<div class="meal-row"><div class="mdot" style="background:#ddd"></div>'
+           + '<div class="meal-row-text" style="color:#bbb">— No meal planned —</div></div>';
+      } else {
+        meals.forEach((meal, mi) => {
+          h += '<div class="meal-row">'
+             + '<div class="mdot" style="background:' + dotColor(mi) + '"></div>'
+             + '<div class="meal-row-text">' + meal + '</div>'
+             + '</div>';
+        });
+      }
+    });
+  }
+  card.innerHTML = h;
+}
+
+/* ══════════════════════════
+   RENDER: CALENDAR DAY STRIP
+══════════════════════════ */
+function renderCalendarWeek() {
+  const strip = document.querySelector('.cal-week');
+  if (!strip) return;
+  let h = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(); d.setDate(d.getDate() + i);
+    const label    = DAY_NAMES[d.getDay()] + ' ' + d.getDate();
+    const hasMeals = (mealPlan[label] || []).length > 0;
+    const isToday  = i === 0;
+    const isSel    = label === selectedCalDay && !isToday;
+    h += '<div class="cal-day' + (isToday ? ' today' : '') + (isSel ? ' selected-day' : '') + '" '
+       + 'onclick="selectCalDay(\'' + label.replace(/'/g,"\\'") + '\')">'
+       + '<div class="cdn">'  + DAY_NAMES[d.getDay()].toUpperCase() + '</div>'
+       + '<div class="cdnum">' + d.getDate() + '</div>'
+       + (hasMeals ? '<div class="cdot"></div>' : '<div style="height:8px"></div>')
+       + '</div>';
+  }
+  strip.innerHTML = h;
+}
+
+/* ══════════════════════════
+   RENDER: CALENDAR MEALS PANEL
+══════════════════════════ */
+function renderCalendarMeals(day) {
+  if (day) selectedCalDay = day;
+  const container = document.getElementById('cal-meals-container');
+  if (!container) return;
+  const meals = mealPlan[selectedCalDay] || [];
+  let h = '';
+
+  // Static blocks always visible
+  h += '<div class="cal-block"><div class="cal-type b">Breakfast</div>'
+     + '<div class="cal-name">Yogurt Bowl with Blueberries</div></div>';
+  h += '<div class="cal-block"><div class="cal-type l">Lunch</div>'
+     + '<div class="cal-name">Japanese Curry Pork Chop Rice</div></div>';
+
+  // Dynamic Unassigned block — one line per added meal
+  if (meals.length > 0) {
+    h += '<div class="cal-block"><div class="cal-type a">Unassigned</div>';
+    meals.forEach(meal => { h += '<div class="cal-name">' + meal + '</div>'; });
+    h += '</div>';
+  }
+
+  // Add prompt
+  h += '<div class="cal-block"><div class="cal-empty" '
+     + 'onclick="openMealSelect(\'' + selectedCalDay.replace(/'/g,"\\'") + '\')">'
+     + '＋ Add a meal to ' + selectedCalDay + '</div></div>';
+
+  container.innerHTML = h;
+}
+
+function selectCalDay(label) {
+  selectedCalDay = label;
+  renderCalendarWeek();
+  renderCalendarMeals();
+}
+
+/* ── Render everything at once ── */
+function renderAll() {
+  renderEmployerWeekly();
+  renderHelperWeekly();
+  renderCalendarWeek();
+  renderCalendarMeals();
+}
+
+/* ══════════════════════════
+   MEAL SELECT FLOW
+══════════════════════════ */
+function openMealSelect(day) {
+  pendingDay = day;
+  const title = document.querySelector('#screen-meal-select .back-bar h2');
+  if (title) title.textContent = 'Add meal to ' + day;
+  document.querySelectorAll('.rgcard').forEach(c => c.classList.remove('picked'));
+  navTo('screen-meal-select', 'nav-recipe');
+}
+
+function addToPlan() {
+  const picked = [...document.querySelectorAll('.rgcard.picked')];
+  if (picked.length === 0) { showToast('⚠️ Please select at least one dish!'); return; }
+  const names = picked.map(c => c.querySelector('.rgcard-name').textContent.trim());
+  if (!mealPlan[pendingDay]) mealPlan[pendingDay] = [];
+  names.forEach(n => { if (!mealPlan[pendingDay].includes(n)) mealPlan[pendingDay].push(n); });
+  renderAll();
+  showToast('✅ ' + names.length + ' meal' + (names.length !== 1 ? 's' : '') + ' added to ' + pendingDay + '!');
+  setTimeout(() => navTo('screen-employer-home', 'nav-home'), 1400);
+}
+
+/* ══════════════════════════
+   DELETE MEAL
+══════════════════════════ */
+function deleteMeal(btn) {
+  const row  = btn.closest('.meal-row');
+  const day  = row.dataset.day;
+  const meal = row.dataset.meal;
+  if (mealPlan[day]) mealPlan[day] = mealPlan[day].filter(m => m !== meal);
+  renderAll();
+}
+
+/* ══════════════════════════
+   NAV
+══════════════════════════ */
+function navTo(screenId, navId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const s = document.getElementById(screenId); if (s) s.classList.add('active');
+  const b = navId ? document.getElementById(navId) : null; if (b) b.classList.add('active');
+}
+function selectRole(card) {
+  document.querySelectorAll('.rcard').forEach(c => c.classList.remove('selected-card'));
+  card.classList.add('selected-card');
+}
+function goToApp() {
+  const sel = document.querySelector('.rcard.selected-card');
+  if (!sel) { showToast('Please select a role first'); return; }
+  if (sel.dataset.role === 'employer') navTo('screen-employer-home', 'nav-home');
+  else navTo('screen-helper-home', 'nav-home');
+}
+
+/* ── Tabs ── */
+function switchDetailTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(t => t.className = 'tab-btn off');
+  btn.className = 'tab-btn on';
+  ['dtab-ov','dtab-ing','dtab-steps'].forEach(i => { const el=document.getElementById(i); if(el) el.classList.add('hidden'); });
+  const t = document.getElementById(id); if(t) t.classList.remove('hidden');
+}
+function switchHelperTab(btn, id) {
+  document.querySelectorAll('.htab').forEach(t => t.className = 'htab off');
+  btn.className = 'htab on';
+  ['htab-ing','htab-steps'].forEach(i => { const el=document.getElementById(i); if(el) el.classList.add('hidden'); });
+  const t = document.getElementById(id); if(t) t.classList.remove('hidden');
+}
+
+/* ── Ingredient checks ── */
+function toggleIng(item) {
+  const c = item.querySelector('.ing-chk');
+  if (c.classList.contains('cp'))      { c.classList.remove('cp'); c.textContent=''; }
+  else if (c.classList.contains('cs')) { c.classList.remove('cs'); c.textContent=''; }
+  else { c.classList.add('cp'); c.textContent='✓'; }
+}
+function toggleHIng(item) {
+  const c = item.querySelector('.hchk');
+  c.classList.toggle('done'); c.textContent = c.classList.contains('done') ? '✓' : '';
+}
+function toggleShop(item) {
+  const c = item.querySelector('.schk'), n = item.querySelector('.s-name');
+  c.classList.toggle('done'); n.classList.toggle('done');
+  c.textContent = c.classList.contains('done') ? '✓' : '';
+  const all=document.querySelectorAll('.schk').length, done=document.querySelectorAll('.schk.done').length;
+  const pf=document.getElementById('prog-fill'), pl=document.getElementById('prog-lbl');
+  if(pf) pf.style.width=Math.round(done/all*100)+'%';
+  if(pl) pl.textContent=done+' of '+all+' items checked';
+}
+
+/* ── Recipe grid ── */
+function togglePick(card) { card.classList.toggle('picked'); }
+function filterChip(btn) {
+  document.querySelectorAll('.fchip').forEach(c => c.className='fchip off');
+  btn.className='fchip on';
+}
+
+/* ── Toast ── */
+function showToast(msg) {
+  const t = document.getElementById('toast'); if(!t) return;
+  t.textContent=msg; t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; },2800);
+}
+
+/* ══════════════════════════
+   BOOT
+══════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Helper home date badge
+  const badge = document.querySelector('#screen-helper-home .section-row span');
+  if (badge) {
+    const d = new Date();
+    badge.textContent = DAY_NAMES[d.getDay()] + ' ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
+  }
+  renderAll();
+  navTo('screen-role', null);
+});
+</script>
+  
 </body>
 </html>
