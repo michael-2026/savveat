@@ -179,7 +179,7 @@ html, body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 .day-lbl { padding: 12px 16px 4px; font-size: 14px; font-weight: 800; color: #1a1a1a; }
-.day-lbl.today { color: #e8533a; }
+.day-lbl.today { color: #1a1a1a; }
 .meal-row {
   display: flex; align-items: center; padding: 11px 16px;
   border-bottom: 1px solid #f8f8f8; gap: 10px;
@@ -242,10 +242,10 @@ html, body {
    EMPLOYER RECIPE DETAIL
 ════════════════════ */
 #screen-recipe-detail { background: #faf7f4; }
-.thumb-scroll { display: flex; gap: 10px; padding: 0 16px 12px; overflow-x: auto; }
+.thumb-scroll { display: flex; gap: 10px; padding: 0 16px 12px; flex-wrap: wrap; }
 .thumb-scroll::-webkit-scrollbar { display: none; }
 .rthumb {
-  flex-shrink: 0; width: 110px; border-radius: 14px; overflow: hidden;
+  flex-shrink: 0; flex: 1 1 calc(25% - 10px); min-width: 90px; border-radius: 14px; overflow: hidden;
   cursor: pointer; transition: transform 0.15s; background: #fff;
 }
 .rthumb.selected { outline: 3px solid #e8533a; }
@@ -665,24 +665,12 @@ html, body {
     <!-- ════ EMPLOYER RECIPE DETAIL ════ -->
     <div class="screen" id="screen-recipe-detail">
       <div class="back-bar" onclick="navTo('screen-employer-home','nav-home')">
-        <span class="back-arrow">‹</span><h2>Today's Dinner</h2>
+        <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
       </div>
       <div class="thumb-scroll">
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Fried rice noodle with shrimp</div>
-        </div>
         <div class="rthumb selected" onclick="pickThumb(this)">
           <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=300&q=80" alt="">
           <div class="rthumb-lbl">Grilled Steak (with Asparagus)</div>
-        </div>
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Japanese Miso Soup with Tofu</div>
-        </div>
-        <div class="rthumb" onclick="pickThumb(this)">
-          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=300&q=80" alt="">
-          <div class="rthumb-lbl">Chinese Eggplant with Minced Pork</div>
         </div>
       </div>
       <div class="detail-card">
