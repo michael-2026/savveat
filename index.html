@@ -973,6 +973,9 @@ function applyRole(r) {
     document.getElementById('profile-sub').textContent  = 'Helper · Standard';
     document.getElementById('profile-avatar').style.background = '#388e3c';
     document.getElementById('pref-row').style.display = 'none';
+    // Init calendar default
+    renderCalendar(currentCalDay);
+    renderWeeklyCards();
     // Initialise calendar to show Thu 12 by default
     currentCalDay = 'Thu_12';
     document.querySelectorAll('.cal-day').forEach(d => {
@@ -1058,11 +1061,98 @@ function filterChip(btn) {
   document.querySelectorAll('.fchip').forEach(c => c.className = 'fchip off');
   btn.className = 'fchip on';
 }
-function addToPlan() {
-  const n = document.querySelectorAll('.rgcard.picked').length;
-  showToast('✅ ' + n + ' meal' + (n !== 1 ? 's' : '') + ' added to plan!');
-  setTimeout(() => navTo('screen-employer-home', 'nav-home'), 1500);
-}
+// ── Meal Plan Data Store ─────────────────────────────────────────────────────
+    const mealPlan = {};
+    let pendingDay = null;
+    let currentCalDay = 'Thu_12';
+
+    const dotColors = ['#2ab5a5','#f5a623','#e8533a','#9c27b0','#2196f3','#4caf50'];
+    function dotColor(i){ return dotColors[i % dotColors.length]; }
+
+    function renderWeeklyCards() {
+      ['employer', 'helper'].forEach(function(role) {
+        var card = document.querySelector('#screen-' + role + '-home .weekly-card');
+        if (!card) return;
+        card.querySelectorAll('.day-lbl').forEach(function(lbl) {
+          var dayKey = lbl.dataset.day;
+          if (!dayKey) return;
+          var sib = lbl.nextElementSibling;
+          while (sib && !sib.classList.contains('day-lbl')) {
+            var next = sib.nextElementSibling;
+            if (sib.classList.contains('meal-row')) sib.remove();
+            sib = next;
+          }
+          var addRow = card.querySelector('.add-row[data-day="' + dayKey + '"]');
+          var meals = mealPlan[dayKey] || [];
+          meals.forEach(function(name, i) {
+            var row = document.createElement('div');
+            row.className = 'meal-row';
+            var delBtn = role === 'employer'
+              ? '<div class="del-btn" onclick="deleteMeal(\'' + dayKey + '\',' + i + ')">✕</div>'
+              : '<span></span>';
+            row.innerHTML = '<div class="mdot" style="background:' + dotColor(i) + '"></div>'
+              + '<div class="meal-row-text">' + name + '</div>' + delBtn;
+            if (addRow) card.insertBefore(row, addRow);
+            else lbl.parentNode.appendChild(row);
+          });
+        });
+      });
+    }
+
+    function renderCalendar(dayKey) {
+      var calMeals = document.querySelector('.cal-meals');
+      if (!calMeals) return;
+      calMeals.querySelectorAll('.cal-block.dynamic').forEach(function(b){ b.remove(); });
+      var addBlock = document.getElementById('cal-add-block');
+      var meals = mealPlan[dayKey] || [];
+      var block = document.createElement('div');
+      block.className = 'cal-block dynamic';
+      if (meals.length === 0) {
+        block.innerHTML = '<div class="cal-type a">Unassigned</div><div class="cal-empty">No meals planned yet.</div>';
+      } else {
+        block.innerHTML = '<div class="cal-type a">Unassigned</div>'
+          + meals.map(function(m){ return '<div class="cal-name">' + m + '</div>'; }).join('');
+      }
+      if (addBlock) calMeals.insertBefore(block, addBlock);
+      else calMeals.appendChild(block);
+    }
+
+    function deleteMeal(dayKey, idx) {
+      if (!mealPlan[dayKey]) return;
+      mealPlan[dayKey].splice(idx, 1);
+      renderWeeklyCards();
+      renderCalendar(currentCalDay);
+    }
+
+    function selectCalDay(dayKey, el) {
+      currentCalDay = dayKey;
+      document.querySelectorAll('.cal-day').forEach(function(d){
+        d.classList.remove('today');
+      });
+      el.classList.add('today');
+      renderCalendar(dayKey);
+    }
+
+    function openMealSelectForDay(dayKey) {
+      pendingDay = dayKey;
+      navTo('screen-meal-select', 'nav-recipe');
+    }
+
+    function addToPlan() {
+      var picked = document.querySelectorAll('.rgcard.picked');
+      if (!picked.length) { showToast('Pick a dish first!'); return; }
+      if (!pendingDay) { showToast('No day selected.'); return; }
+      if (!mealPlan[pendingDay]) mealPlan[pendingDay] = [];
+      picked.forEach(function(card) {
+        var name = card.querySelector('.rgcard-name').textContent.trim();
+        if (!mealPlan[pendingDay].includes(name)) mealPlan[pendingDay].push(name);
+      });
+      picked.forEach(function(c){ c.classList.remove('picked'); });
+      renderWeeklyCards();
+      renderCalendar(currentCalDay);
+      showToast('Added to ' + pendingDay.replace('_',' ') + '!');
+      setTimeout(function(){ navTo('screen-employer-home', 'nav-home'); }, 1200);
+    }
 
 /* Toast */
 function showToast(msg) {
