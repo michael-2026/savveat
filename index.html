@@ -652,6 +652,61 @@ html, body {
       <button class="add-plan-btn" onclick="addToPlan()">＋ Add to Meal Plan</button>
     </div>
 
+    <!-- ════ EMPLOYER RECIPE DETAIL 1════ -->
+    <div class="screen" id="screen-recipe-detail-1">
+      <div class="back-bar" onclick="navTo('screen-employer-home','nav-home')">
+        <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
+      </div>
+      <div class="role-tabs-bar">
+        <button class="rtab on">Chinese Eggplant with Minced Pork</button>
+        <button class="rtab off">Grilled Steak with Asparagus</button>
+      </div>
+      <div class="detail-card">
+        <div class="detail-title">Chinese Eggplant with Minced Pork<span class="detail-menu">···</span></div>
+        <div class="tab-bar">
+          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-ov')">Overview</button>
+          <button class="tab-btn on"  onclick="switchDetailTab(this,'dtab-ing')">Ingredients</button>
+          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-steps')">Steps</button>
+        </div>
+        <div id="dtab-ov" class="hidden">
+          <div class="overview-list">
+            <div class="ov-row"><span class="ov-lbl">Cuisine</span><span class="ov-val">Hong Kong Local</span></div>
+            <div class="ov-row"><span class="ov-lbl">Prep Time</span><span class="ov-val">15 min</span></div>
+            <div class="ov-row"><span class="ov-lbl">Cook Time</span><span class="ov-val">15 min</span></div>
+            <div class="ov-row"><span class="ov-lbl">Servings</span><span class="ov-val">2 persons</span></div>
+            <div class="ov-row"><span class="ov-lbl">Calories</span><span class="ov-val">~310 kcal</span></div>
+            <div class="ov-row"><span class="ov-lbl">Difficulty</span><span class="ov-val">⭐⭐⭐</span></div>
+          </div>
+        </div>
+        <div id="dtab-ing">
+          <div class="ing-header">
+            <strong>Ingredients</strong>
+            <div class="source-badge"><div class="sdot"></div> Supermarket ⌄</div>
+          </div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk"></div><div class="ing-nm">Minced pork</div><div class="ing-pr">$43</div></div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk"></div><div class="ing-nm">Eggplant</div><div class="ing-pr">$22</div></div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk cp">✓</div><div class="ing-nm">Garlic</div><div class="ing-pr">$8</div></div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk cp">✓</div><div class="ing-nm">Green onion</div><div class="ing-pr">$4</div></div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk cs">✓</div><div class="ing-nm">Chinese broad bean sauce</div><div class="ing-pr">$36</div></div>
+          <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk cs">✓</div><div class="ing-nm">Pickled red chilli</div><div class="ing-pr">$33</div></div>
+          <div class="cost-bar">
+            <div class="cost-chk">Checked &nbsp; $73</div>
+            <div class="cost-tot">Total &nbsp; $146</div>
+          </div>
+        </div>
+        <div id="dtab-steps" class="hidden">
+          <div class="step-list">
+            <div class="step-row"><div class="snum">1.</div><div class="stxt">Mix the minced pork with the marinade and let it marinate briefly.</div></div>
+            <div class="step-row"><div class="snum">2.</div><div class="stxt">Trim the stems from the eggplants, wash them, and cut into diamond shapes.</div></div>
+            <div class="step-row"><div class="snum">3.</div><div class="stxt">Heat 1/2 tablespoon oil in a nonstick wok, add the minced pork and stir-fry until about 80% cooked, then remove and set aside.</div></div>
+            <div class="step-row"><div class="snum">4.</div><div class="stxt">Add 1 tablespoon oil, stir-fry the eggplant and add minced garlic.</div></div>
+            <div class="step-row"><div class="snum">5.</div><div class="stxt">Add enough water to simmer the eggplant until tender.</div></div>
+          </div>
+        </div>
+      </div>
+      <button class="share-btn" onclick="showToast('✅ Shared with your helper!')">Share with My Helper</button>
+    </div>
+
     <!-- ════ EMPLOYER RECIPE DETAIL ════ -->
     <div class="screen" id="screen-recipe-detail">
       <div class="back-bar" onclick="navTo('screen-employer-home','nav-home')">
@@ -675,7 +730,7 @@ html, body {
             <div class="ov-row"><span class="ov-lbl">Cook Time</span><span class="ov-val">20 min</span></div>
             <div class="ov-row"><span class="ov-lbl">Servings</span><span class="ov-val">2 persons</span></div>
             <div class="ov-row"><span class="ov-lbl">Calories</span><span class="ov-val">~520 kcal</span></div>
-            <div class="ov-row"><span class="ov-lbl">Difficulty</span><span class="ov-val">⭐⭐⭐</span></div>
+            <div class="ov-row"><span class="ov-lbl">Difficulty</span><span class="ov-val">⭐⭐</span></div>
           </div>
         </div>
         <div id="dtab-ing">
@@ -705,7 +760,7 @@ html, body {
       </div>
       <button class="share-btn" onclick="showToast('✅ Shared with your helper!')">Share with My Helper</button>
     </div>
-
+    
     <!-- ════ HELPER HOME ════ -->
     <div class="screen" id="screen-helper-home">
       <div class="helper-banner">
