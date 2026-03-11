@@ -567,7 +567,7 @@ html, body {
       </div>
       <div class="meal-scroll">
         <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80" alt="Lunch">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="Lunch">
           <div class="mcard-icon">🍚</div>
           <div class="mcard-lbl">Lunch</div>
         </div>
@@ -583,7 +583,13 @@ html, body {
       <button class="grocery-btn" onclick="navTo('screen-recipe-detail','nav-recipe')">Check My Upcoming Meal</button>
       <div class="section-row">
         <h3>Weekly Meal Plan</h3>
-        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">✏️</button>
+        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 
+            7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 
+            0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+          </svg>
+</button>
       </div>
       <div class="weekly-card">
         <div class="day-lbl">Sat 17</div>
@@ -660,12 +666,12 @@ html, body {
       </div>
       <div class="thumb-scroll">
         <div class="rthumb selected" onclick="pickThumb(this)">
-          <img src=https://images.unsplash.com/photo-1558030006-450675393462" alt="">
+          <img src=https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80" alt="">
           <div class="rthumb-lbl">Grilled Steak with Asparagus</div>
         </div>
       </div>
       <div class="detail-card">
-        <div class="detail-title">Grilled Steak <span class="detail-menu">···</span></div>
+        <div class="detail-title">Grilled Steak with Asparagus<span class="detail-menu">···</span></div>
         <div class="tab-bar">
           <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-ov')">Overview</button>
           <button class="tab-btn on"  onclick="switchDetailTab(this,'dtab-ing')">Ingredients</button>
@@ -731,7 +737,7 @@ html, body {
         </div>
         <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
           <div class="type-badge d">Dinner</div>
-          <div class="plan-name">Grilled Steak (with Asparagus)</div>
+          <div class="plan-name">Grilled Steak with Asparagus</div>
           <div class="plan-arrow">›</div>
         </div>
       </div>
@@ -743,7 +749,7 @@ html, body {
       <div class="weekly-card">
         <div class="day-lbl">Mon 19</div>
         <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Japanese Curry Pork Chop Rice</div><span>🍜</span></div>
-        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak (with Asparagus)</div><span>🍛</span></div>
+        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak with Asparagus</div><span>🍛</span></div>
       </div>
     </div>
 
@@ -756,7 +762,7 @@ html, body {
       <div class="meal-banner">
         <img src="https://images.unsplash.com/photo-1558030006-450675393462?w=300&q=80" alt="">
         <div>
-          <div class="meal-banner-name">Grilled Steak (with Asparagus)</div>
+          <div class="meal-banner-name">Grilled Steak with Asparagus</div>
           <div class="meal-banner-sub">Tap an ingredient for translation</div>
         </div>
       </div>
