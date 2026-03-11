@@ -472,6 +472,7 @@ html, body {
 .cal-type.b { color: #43a047; }
 .cal-type.l { color: #fb8c00; }
 .cal-type.d { color: #e8533a; }
+.cal-type.a { color: #446062; }
 .cal-name  { padding: 0 14px 12px; font-size: 14px; font-weight: 700; color: #1a1a1a; }
 .cal-empty {
   padding: 13px 14px; font-size: 13px; color: #bbb;
@@ -583,30 +584,31 @@ html, body {
       <button class="grocery-btn" onclick="navTo('screen-recipe-detail','nav-recipe')">Check My Upcoming Meal</button>
       <div class="section-row">
         <h3>Weekly Meal Plan</h3>
-        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">✎</button>
+        <button class="ghost-btn" onclick="navTo('screen-calendar','nav-cal')">›</button>
       </div>
       <div class="weekly-card">
         <div class="day-lbl">Sat 17</div>
         <div class="meal-row">
           <div class="mdot" style="background:#2ab5a5"></div>
           <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
-          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
+          <div class="del-btn">🗑</div>
         </div>
         <div class="meal-row">
           <div class="mdot" style="background:#f5a623"></div>
           <div class="meal-row-text">Grilled Steak with Asparagus</div>
-          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
+          <div class="del-btn">🗑</div>
         </div>
-        <div class="add-row" onclick="navTo('screen-meal-select','nav-recipe')">
-          <span>＋</span> Add meal to Sat 17
+        <div class="add-row">
+          <span>＋</span> Add meal to Thu 12
         </div>
         <div class="day-lbl today">Sun 18</div>
         <div class="meal-row">
           <div class="mdot" style="background:#ddd"></div>
-          <div class="meal-row-text" style="color:#bbb">- No meal planned -</div>
+          <div class="meal-row-text" style="color:#bbb">Rigatoni Pasta with Cream Sauce</div>
+          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
         </div>
         <div class="add-row" onclick="navTo('screen-meal-select','nav-recipe')">
-          <span>＋</span> Add meal to Sun 18
+          <span>＋</span> Add meal to Fri 13
         </div>
       </div>
     </div>
@@ -643,7 +645,7 @@ html, body {
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Rigatoni Pasta with Tomato Sauce</div><span class="rgcard-tag">Western</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Rigatoni Pasta with Cream Sauce</div><span class="rgcard-tag">Western</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="">
@@ -658,11 +660,9 @@ html, body {
       <div class="back-bar" onclick="navTo('screen-employer-home','nav-home')">
         <span class="back-arrow">‹</span><h2>My Upcoming Meal</h2>
       </div>
-      <div class="thumb-scroll">
-        <div class="rthumb selected" onclick="pickThumb(this)">
-          <img src=https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80" alt="">
-          <div class="rthumb-lbl">Grilled Steak with Asparagus</div>
-        </div>
+      <div class="role-tabs-bar">
+        <button class="rtab off">Chinese Eggplant with Minced Pork</button>
+        <button class="rtab on">Grilled Steak with Asparagus</button>
       </div>
       <div class="detail-card">
         <div class="detail-title">Grilled Steak with Asparagus<span class="detail-menu">···</span></div>
@@ -840,17 +840,16 @@ html, body {
         👁 Read only — your employer manages the meal plan
       </div>
       <div class="cal-week">
-        <div class="cal-day today"><div class="cdn">THU</div><div class="cdnum">12</div><div class="cdot"></div></div>
-        <div class="cal-day"><div class="cdn">FRI</div><div class="cdnum">13</div></div>
-        <div class="cal-day"><div class="cdn">SAT</div><div class="cdnum">14</div><div class="cdot"></div></div>
+        <div class="cal-day next"><div class="cdn">THU</div><div class="cdnum">12</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">FRI</div><div class="cdnum">13</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">SAT</div><div class="cdnum">14</div></div>
         <div class="cal-day"><div class="cdn">SUN</div><div class="cdnum">15</div></div>
         <div class="cal-day"><div class="cdn">MON</div><div class="cdnum">16</div><div class="cdot"></div></div>
-        <div class="cal-day"><div class="cdn">TUE</div><div class="cdnum">17</div><div class="cdot"></div></div>
+        <div class="cal-day"><div class="cdn">TUE</div><div class="cdnum">17</div></div>
         <div class="cal-day"><div class="cdn">WED</div><div class="cdnum">18</div><div class="cdot"></div></div>
       </div>
       <div class="cal-meals">
-        <div class="cal-block"><div class="cal-type l">Lunch</div><div class="cal-name">Chinese Eggplant with Minced Pork</div></div>
-        <div class="cal-block"><div class="cal-type d">Dinner</div><div class="cal-name">Grilled Steak with Asparagus</div></div>
+        <div class="cal-block"><div class="cal-type a">Unassiged</div><div class="cal-name">Rigatoni Pasta with Cream Sauce</div></div>
         <div class="cal-block" id="cal-add-block">
           <div class="cal-empty" onclick="navTo('screen-meal-select','nav-recipe')">＋ Add a meal</div>
         </div>
