@@ -1033,9 +1033,11 @@ function toggleShop(item) {
 /* Recipe thumbs & grid */
 function pickThumb(el) {
   document.querySelectorAll('.rthumb').forEach(t => t.classList.remove('selected'));
-  el.classList.add('selected');
+  card.classList.add('picked');
 }
-function togglePick(card) { card.classList.toggle('picked'); }
+function togglePick(card) {
+  document.querySelectorAll('.rgcard').forEach(c => c.classList.remove('picked'));
+  card.classList.toggle('picked'); }
 function filterChip(btn) {
   document.querySelectorAll('.fchip').forEach(c => c.className = 'fchip off');
   btn.className = 'fchip on';
