@@ -320,7 +320,7 @@ html, body {
 #screen-helper-home { background: #faf7f4; }
 .helper-banner {
   margin: 14px 16px 4px;
-  background: linear-gradient(135deg, #43a047, #2e7d32);
+  background: #41b0b7;
   border-radius: 18px; padding: 16px 18px; color: #fff;
   display: flex; align-items: center; gap: 14px;
 }
@@ -347,9 +347,9 @@ html, body {
   font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 10px;
   text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; width: 72px; text-align: center;
 }
-.type-badge.b { background: #e8f5e9; color: #388e3c; }
-.type-badge.l { background: #fff8e1; color: #f57c00; }
-.type-badge.d { background: #fde8e4; color: #e8533a; }
+.type-badge.b { background: #f5f8fa; color: #1a1a1a; }
+.type-badge.l { background: #f5f8fa; color: #1a1a1a; }
+.type-badge.d { background: #f5f8fa; color: #1a1a1a; }
 .plan-name  { flex: 1; font-size: 14px; font-weight: 700; color: #333; }
 .plan-arrow { font-size: 16px; color: #ccc; }
 .quick-btns { display: flex; gap: 10px; padding: 2px 16px 14px; }
@@ -565,12 +565,6 @@ html, body {
         <h2>Today's Meal</h2>
         <button class="ghost-btn" onclick="navTo('screen-meal-select','nav-recipe')">＋</button>
       </div>
-      <div class="meal-scroll">
-        <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
-          <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&q=80" alt="Breakfast">
-          <div class="mcard-icon">🥣</div>
-          <div class="mcard-lbl">Breakfast</div>
-        </div>
         <div class="mcard" onclick="navTo('screen-recipe-detail','nav-recipe')">
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80" alt="Lunch">
           <div class="mcard-icon">🍚</div>
@@ -594,17 +588,12 @@ html, body {
         <div class="day-lbl">Sat 17</div>
         <div class="meal-row">
           <div class="mdot" style="background:#2ab5a5"></div>
-          <div class="meal-row-text">Satay Beef Noodles</div>
-          <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
-        </div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#f5a623"></div>
           <div class="meal-row-text">Japanese Curry Pork Chop Rice</div>
           <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
         </div>
         <div class="meal-row">
-          <div class="mdot" style="background:#8b5e3c"></div>
-          <div class="meal-row-text">Toast with Coffee</div>
+          <div class="mdot" style="background:#f5a623"></div>
+          <div class="meal-row-text">Grilled Steak with Asparagus</div>
           <div class="del-btn" onclick="this.closest('.meal-row').remove()">🗑</div>
         </div>
         <div class="add-row" onclick="navTo('screen-meal-select','nav-recipe')">
@@ -648,7 +637,7 @@ html, body {
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Fried Rice Noodle with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Fried Rice with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" alt="">
@@ -656,7 +645,7 @@ html, body {
         </div>
         <div class="rgcard" onclick="togglePick(this)">
           <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="">
-          <div class="rgcard-info"><div class="rgcard-name">Satay Beef Noodles</div><span class="rgcard-tag">HK Local</span></div>
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Curry Pork Chop Rice</div><span class="rgcard-tag">HK Local</span></div>
         </div>
       </div>
       <button class="add-plan-btn" onclick="addToPlan()">＋ Add to Meal Plan</button>
@@ -734,11 +723,6 @@ html, body {
       </div>
       <div class="today-plan-card">
         <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
-          <div class="type-badge b">Breakfast</div>
-          <div class="plan-name">Yogurt Bowl with Blueberries</div>
-          <div class="plan-arrow">›</div>
-        </div>
-        <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
           <div class="type-badge l">Lunch</div>
           <div class="plan-name">Japanese Curry Pork Chop Rice</div>
           <div class="plan-arrow">›</div>
@@ -756,8 +740,8 @@ html, body {
       <div class="section-row"><h3>Upcoming</h3></div>
       <div class="weekly-card">
         <div class="day-lbl">Mon 19</div>
-        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Satay Beef Noodles</div><span>🍜</span></div>
-        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Japanese Curry Pork Chop Rice</div><span>🍛</span></div>
+        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Japanese Curry Pork Chop Rice</div><span>🍜</span></div>
+        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak (with Asparagus)</div><span>🍛</span></div>
       </div>
     </div>
 
@@ -863,7 +847,6 @@ html, body {
         <div class="cal-day"><div class="cdn">WED</div><div class="cdnum">18</div><div class="cdot"></div></div>
       </div>
       <div class="cal-meals">
-        <div class="cal-block"><div class="cal-type b">Breakfast</div><div class="cal-name">Yogurt Bowl with Blueberries</div></div>
         <div class="cal-block"><div class="cal-type l">Lunch</div><div class="cal-name">Japanese Curry Pork Chop Rice</div></div>
         <div class="cal-block"><div class="cal-type d">Dinner</div><div class="cal-name">Grilled Steak (with Asparagus)</div></div>
         <div class="cal-block" id="cal-add-block">
