@@ -272,6 +272,7 @@ html, body {
 }
 .ing-header strong { font-size: 15px; font-weight: 800; }
 .source-badge { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #555; cursor: pointer; }
+.sdot-1 { width: 10px; height: 10px; border-radius: 50%; background: #216583; flex-shrink: 0; }
 .sdot { width: 10px; height: 10px; border-radius: 50%; background: #f5a623; flex-shrink: 0; }
 .ing-item {
   display: flex; align-items: center; padding: 11px 16px;
@@ -534,7 +535,6 @@ html, body {
     <div class="screen active" id="screen-role">
       <div class="role-tabs-bar">
         <button class="rtab on">Role selection</button>
-        <button class="rtab off">Meal preferences</button>
       </div>
       <div class="who-block">
         <h2>Who are you?</h2>
@@ -664,11 +664,11 @@ html, body {
       <div class="detail-card">
         <div class="detail-title">Chinese Eggplant with Minced Pork<span class="detail-menu">···</span></div>
         <div class="tab-bar">
-          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-ov')">Overview</button>
-          <button class="tab-btn on"  onclick="switchDetailTab(this,'dtab-ing')">Ingredients</button>
-          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-steps')">Steps</button>
+          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-ov-1')">Overview</button>
+          <button class="tab-btn on"  onclick="switchDetailTab(this,'dtab-ing-1')">Ingredients</button>
+          <button class="tab-btn off" onclick="switchDetailTab(this,'dtab-steps-1')">Steps</button>
         </div>
-        <div id="dtab-ov" class="hidden">
+        <div id="dtab-ov-1" class="hidden">
           <div class="overview-list">
             <div class="ov-row"><span class="ov-lbl">Cuisine</span><span class="ov-val">Hong Kong Local</span></div>
             <div class="ov-row"><span class="ov-lbl">Prep Time</span><span class="ov-val">15 min</span></div>
@@ -678,10 +678,10 @@ html, body {
             <div class="ov-row"><span class="ov-lbl">Difficulty</span><span class="ov-val">⭐⭐⭐</span></div>
           </div>
         </div>
-        <div id="dtab-ing">
+        <div id="dtab-ing-1">
           <div class="ing-header">
             <strong>Ingredients</strong>
-            <div class="source-badge"><div class="sdot"></div> Supermarket ⌄</div>
+            <div class="source-badge"><div class="sdot-1"></div> Supermarket ⌄</div>
           </div>
           <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk"></div><div class="ing-nm">Minced pork</div><div class="ing-pr">$43</div></div>
           <div class="ing-item" onclick="toggleIng(this)"><div class="ing-chk"></div><div class="ing-nm">Eggplant</div><div class="ing-pr">$22</div></div>
@@ -694,7 +694,7 @@ html, body {
             <div class="cost-tot">Total &nbsp; $146</div>
           </div>
         </div>
-        <div id="dtab-steps" class="hidden">
+        <div id="dtab-steps-1" class="hidden">
           <div class="step-list">
             <div class="step-row"><div class="snum">1.</div><div class="stxt">Mix the minced pork with the marinade and let it marinate briefly.</div></div>
             <div class="step-row"><div class="snum">2.</div><div class="stxt">Trim the stems from the eggplants, wash them, and cut into diamond shapes.</div></div>
@@ -920,7 +920,7 @@ html, body {
           </div>
         </div>
         <div class="settings-card">
-          <div class="settings-row" id="pref-row">Meal Preferences <span>Edit ›</span></div>
+          <div class="settings-row" id="pref-row">rences <span>Edit ›</span></div>
           <div class="settings-row">Saved Recipes <span>12 ›</span></div>
           <div class="settings-row">Language <span>English ›</span></div>
           <div class="settings-row">Notifications <span>On ›</span></div>
