@@ -1265,13 +1265,13 @@ function showToast(msg) {
   const next2 = new Date(today); next2.setDate(today.getDate() + 2);
   const next2Label = days[next2.getDay()] + ' ' + next2.getDate();
 
-  // Update all day-lbl elements
-  // Employer home: first day-lbl = today, second = next day
-  const allDayLbls = document.querySelectorAll('.day-lbl');
-  // Set by position: [0] = employer today, [1] = employer next, [2] = helper upcoming
-  if (allDayLbls[0]) allDayLbls[0].textContent = todayLabel;
-  if (allDayLbls[1]) { allDayLbls[1].textContent = nextLabel; allDayLbls[1].classList.add('today'); }
-  if (allDayLbls[2]) allDayLbls[2].textContent = nextLabel;   // helper upcoming
+  // // Update all day-lbl elements
+  // // Employer home: first day-lbl = today, second = next day
+  // const allDayLbls = document.querySelectorAll('.day-lbl');
+  // // Set by position: [0] = employer today, [1] = employer next, [2] = helper upcoming
+  // if (allDayLbls[0]) allDayLbls[0].textContent = todayLabel;
+  // if (allDayLbls[1]) { allDayLbls[1].textContent = nextLabel; allDayLbls[1].classList.add('today'); }
+  // if (allDayLbls[2]) allDayLbls[2].textContent = nextLabel;   // helper upcoming
 
   // Also update the "add meal" rows text
   const addRows = document.querySelectorAll('.add-row');
