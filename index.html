@@ -608,12 +608,12 @@ html, body {
         <div class="meal-row">
           <div class="mdot" style="background:#2ab5a5"></div>
           <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
-          <div class="del-btn"> </div>
+          <div class="del-btn"></div>
         </div>
         <div class="meal-row">
           <div class="mdot" style="background:#f5a623"></div>
           <div class="meal-row-text">Grilled Steak with Asparagus</div>
-          <div class="del-btn"> </div>
+          <div class="del-btn"></div>
         </div>
         <div class="day-lbl" data-day="Fri_13">Fri 13</div>
         <div class="add-row" data-day="Fri_13" onclick="openMealSelectForDay('Fri_13')">
@@ -799,6 +799,44 @@ html, body {
       </div>
     </div>
 
+    <!-- ════ HELPER MEAL CATALOGUE ════ -->
+    <div class="screen" id="screen-meal-select">
+      <h2>Meal Catelogue</h2>
+      <div class="filter-row">
+        <button class="fchip on"  onclick="filterChip(this)">All</button>
+        <button class="fchip off" onclick="filterChip(this)">Hong Kong Local 🇭🇰</button>
+        <button class="fchip off" onclick="filterChip(this)">Chinese 🇨🇳</button>
+        <button class="fchip off" onclick="filterChip(this)">Japanese 🇯🇵</button>
+        <button class="fchip off" onclick="filterChip(this)">Western 🌍</button>
+        <button class="fchip off" onclick="filterChip(this)">Quick ⚡</button>
+      </div>
+      <div class="recipe-grid">
+        <div class="rgcard picked">
+          <img src="images/Fried-Rice-Noodle-with-Shrimp.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Fried Rice Noodle with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
+        <div class="rgcard">
+          <img src="images/Japanese-Miso-Soup-with-Tofu.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Miso Soup with Tofu</div><span class="rgcard-tag">Japanese</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Curry Pork Chop Rice</div><span class="rgcard-tag">Japanese</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Rigatoni Pasta with Cream Sauce</div><span class="rgcard-tag">Western</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="images/Chinese_Eggplant_with_Minced_Pork.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Chinese Eggplant with Minced Pork</div><span class="rgcard-tag">Hong Kong Local</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="images/Grilled-Steak-with-Asparagus.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Grilled Steak with Asparagus</div><span class="rgcard-tag">Western</span></div>
+        </div>
+      </div>
+    </div>
+
     <!-- ════ HELPER SHOPPING LIST ════ -->
     <div class="screen" id="screen-helper-shop">
       <div class="shop-header">
@@ -850,6 +888,24 @@ html, body {
         </div>
         <div class="shop-row" onclick="toggleShop(this)">
           <div class="schk done">✓</div><div class="s-name done">Pink Peppercorns</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Minced Pork</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Eggplant</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Garlic</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Green Onion</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Chinese Broad Bean Sauce</div>
+        </div>
+        <div class="shop-row" onclick="toggleShop(this)">
+          <div class="schk done">✓</div><div class="s-name done">Pickled Red Chilli</div>
         </div>
       </div>
     </div>
