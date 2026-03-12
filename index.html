@@ -565,7 +565,7 @@ html, body {
             <p>See today's plan at a glance. Get simple recipes and clear wet-market shopping lists, so you can cook local dishes confidently and independently.</p>
           </div>
         </div>
-        <div class="rcard employer-card selected-card" id="rcard-employer" onclick="selectRole('employer')">
+        <div class="rcard employer-card" id="rcard-employer" onclick="selectRole('employer')">
           <div class="rcard-icon">📅</div>
           <div class="rcard-text">
             <h3>Employer</h3>
@@ -799,6 +799,44 @@ html, body {
       </div>
     </div>
 
+    <!-- ════ HELPER MEAL CATALOGUE ════ -->
+    <div class="screen" id="screen-meal-select">
+      <h2>Meal Catelogue</h2>
+      <div class="filter-row">
+        <button class="fchip on"  onclick="filterChip(this)">All</button>
+        <button class="fchip off" onclick="filterChip(this)">Hong Kong Local 🇭🇰</button>
+        <button class="fchip off" onclick="filterChip(this)">Chinese 🇨🇳</button>
+        <button class="fchip off" onclick="filterChip(this)">Japanese 🇯🇵</button>
+        <button class="fchip off" onclick="filterChip(this)">Western 🌍</button>
+        <button class="fchip off" onclick="filterChip(this)">Quick ⚡</button>
+      </div>
+      <div class="recipe-grid">
+        <div class="rgcard picked">
+          <img src="images/Fried-Rice-Noodle-with-Shrimp.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Fried Rice Noodle with Shrimp</div><span class="rgcard-tag">Chinese</span></div>
+        <div class="rgcard">
+          <img src="images/Japanese-Miso-Soup-with-Tofu.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Miso Soup with Tofu</div><span class="rgcard-tag">Japanese</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Japanese Curry Pork Chop Rice</div><span class="rgcard-tag">Japanese</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=400&q=80" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Rigatoni Pasta with Cream Sauce</div><span class="rgcard-tag">Western</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="images/Chinese_Eggplant_with_Minced_Pork.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Chinese Eggplant with Minced Pork</div><span class="rgcard-tag">Hong Kong Local</span></div>
+        </div>
+        <div class="rgcard">
+          <img src="images/Grilled-Steak-with-Asparagus.png" alt="">
+          <div class="rgcard-info"><div class="rgcard-name">Grilled Steak with Asparagus</div><span class="rgcard-tag">Western</span></div>
+        </div>
+      </div>
+    </div>
+
     <!-- ════ HELPER SHOPPING LIST ════ -->
     <div class="screen" id="screen-helper-shop">
       <div class="shop-header">
@@ -917,7 +955,7 @@ html, body {
         👁 Read only — your employer manages the meal plan
       </div>
       <div class="cal-week">
-        <div class="cal-day today" onclick="selectCalDay('Thu_12', this)">
+        <div class="cal-day" onclick="selectCalDay('Thu_12', this)" next"><div class="cdn">THU</div><div class="cdnum">12</div><div class="cdot"></div></div>
         <div class="cal-day" onclick="selectCalDay('Fri_13', this)""><div class="cdn">FRI</div><div class="cdnum">13</div><div class="cdot"></div></div>
         <div class="cal-day" onclick="selectCalDay('Sat_14', this)""><div class="cdn">SAT</div><div class="cdnum">14</div></div>
         <div class="cal-day" onclick="selectCalDay('Sun_15', this)""><div class="cdn">SUN</div><div class="cdnum">15</div></div>
@@ -1070,7 +1108,6 @@ function applyRole(r) {
     renderCalendar(currentCalDay);
     renderWeeklyCards();
     renderHelperTodayPlan();
-    selectRole('employer');
 
   }
 }
@@ -1145,11 +1182,6 @@ function filterChip(btn) {
       'Thu_12': ['Chinese Eggplant with Minced Pork', 'Grilled Steak with Asparagus'],
       'Fri_13': []
     };
-    const mealTypes = {
-      'Thu_12': ['l', 'd']  // l = Lunch, d = Dinner
-    };
-    const mealTypeLabels = { b: 'Breakfast', l: 'Lunch', d: 'Dinner', a: 'Unassigned' };
-      
     let pendingDay = null;
     let currentCalDay = 'Thu_12';
 
@@ -1214,33 +1246,23 @@ function filterChip(btn) {
         card.appendChild(row);
       });
     }
-  
+
     function renderCalendar(dayKey) {
       var calMeals = document.querySelector('.cal-meals');
       if (!calMeals) return;
       calMeals.querySelectorAll('.cal-block.dynamic').forEach(function(b){ b.remove(); });
       var addBlock = document.getElementById('cal-add-block');
       var meals = mealPlan[dayKey] || [];
-      var types = mealTypes[dayKey] || [];
-    
+      var block = document.createElement('div');
+      block.className = 'cal-block dynamic';
       if (meals.length === 0) {
-        var block = document.createElement('div');
-        block.className = 'cal-block dynamic';
         block.innerHTML = '<div class="cal-type a">Unassigned</div><div class="cal-empty">No meals planned yet.</div>';
-        if (addBlock) calMeals.insertBefore(block, addBlock);
-        else calMeals.appendChild(block);
       } else {
-        meals.forEach(function(name, i) {
-          var type = types[i] || 'a';
-          var label = mealTypeLabels[type] || 'Unassigned';
-          var block = document.createElement('div');
-          block.className = 'cal-block dynamic';
-          block.innerHTML = '<div class="cal-type ' + type + '">' + label + '</div>'
-            + '<div class="cal-name">' + name + '</div>';
-          if (addBlock) calMeals.insertBefore(block, addBlock);
-          else calMeals.appendChild(block);
-        });
+        block.innerHTML = '<div class="cal-type a">Unassigned</div>'
+          + meals.map(function(m){ return '<div class="cal-name">' + m + '</div>'; }).join('');
       }
+      if (addBlock) calMeals.insertBefore(block, addBlock);
+      else calMeals.appendChild(block);
     }
 
     function deleteMeal(dayKey, idx) {
@@ -1329,7 +1351,6 @@ function showToast(msg) {
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     dateBadge.textContent = days[today.getDay()] + ' ' + today.getDate() + ' ' + months[today.getMonth()];
   }
-  applyRole('employer');
 })();
 </script>
 
