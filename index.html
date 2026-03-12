@@ -588,22 +588,7 @@ html, body {
       </div>
       <div class="weekly-card">
         <div class="day-lbl" data-day="Thu_12">Thu 12</div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#2ab5a5"></div>
-          <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
-          <div class="del-btn"> </div>
-        </div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#f5a623"></div>
-          <div class="meal-row-text">Grilled Steak with Asparagus</div>
-          <div class="del-btn"> </div>
-        </div>
         <div class="day-lbl today" data-day="Fri_13">Fri 13</div>
-        <div class="meal-row">
-          <div class="mdot" style="background:#ddd"></div>
-          <div class="meal-row-text" style="color:#bbb">Rigatoni Pasta with Cream Sauce</div>
-          <div class="del-btn" >🗑</div>
-        </div>
         <div class="add-row" data-day="Fri_13" onclick="openMealSelectForDay('Fri_13')">
           <span>＋</span> Add meal to Fri 13
         </div>
@@ -775,17 +760,8 @@ html, body {
         <h2>Today's Meal Plan</h2>
         <span style="font-size:13px;color:#e8533a;font-weight:700;">Sun 18</span>
       </div>
-      <div class="today-plan-card">
-        <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
-          <div class="type-badge l">Lunch</div>
-          <div class="plan-name">Chinese Eggplant with Minced Pork</div>
-          <div class="plan-arrow">›</div>
-        </div>
-        <div class="plan-row" onclick="navTo('screen-helper-recipe','nav-recipe')">
-          <div class="type-badge d">Dinner</div>
-          <div class="plan-name">Grilled Steak with Asparagus</div>
-          <div class="plan-arrow">›</div>
-        </div>
+      <div class="today-plan-card" id="today-plan-card">
+        <!-- meals rendered by JS -->
       </div>
       <div class="quick-btns">
         <button class="qbtn shop" onclick="navTo('screen-helper-shop','nav-grocery')">🛒 Shopping List</button>
@@ -794,8 +770,7 @@ html, body {
       <div class="section-row"><h3>Upcoming Meal Plan</h3></div>
       <div class="weekly-card">
         <div class="day-lbl" data-day="Fri_13">Fri 13</div>
-        <div class="meal-row"><div class="mdot" style="background:#2ab5a5"></div><div class="meal-row-text">Chinese Eggplant with Minced Pork</div><span>🍜</span></div>
-        <div class="meal-row"><div class="mdot" style="background:#f5a623"></div><div class="meal-row-text">Grilled Steak with Asparagus</div><span>🍛</span></div>
+        <!-- meals rendered by JS -->
       </div>
     </div>
 
@@ -1044,6 +1019,7 @@ function applyRole(r) {
     });
     renderCalendar(currentCalDay);
     renderWeeklyCards();
+    renderHelperTodayPlan();
 
   }
 }
@@ -1114,7 +1090,9 @@ function filterChip(btn) {
   btn.className = 'fchip on';
 }
 // ── Meal Plan Data Store ─────────────────────────────────────────────────────
-    const mealPlan = {};
+    const mealPlan = {
+      'Thu_12': ['Chinese Eggplant with Minced Pork', 'Grilled Steak with Asparagus']
+    };
     let pendingDay = null;
     let currentCalDay = 'Thu_12';
 
@@ -1148,6 +1126,31 @@ function filterChip(btn) {
             else lbl.parentNode.appendChild(row);
           });
         });
+      });
+    }
+  
+    function renderHelperTodayPlan() {
+      var card = document.getElementById('today-plan-card');
+      if (!card) return;
+      // Remove existing dynamic rows
+      card.querySelectorAll('.plan-row.dynamic').forEach(function(r){ r.remove(); });
+      var meals = mealPlan['Thu_12'] || [];
+      if (meals.length === 0) {
+        card.innerHTML = '<div class="plan-row"><div class="plan-name" style="color:#bbb">No meals planned yet.</div></div>';
+        return;
+      }
+      var badges = ['b','l','d','a'];
+      meals.forEach(function(name, i) {
+        var row = document.createElement('div');
+        row.className = 'plan-row dynamic';
+        row.setAttribute('onclick', "navTo('screen-helper-recipe','nav-recipe')");
+        row.innerHTML =
+          '<div class="type-badge ' + (badges[i] || 'b') + '">' +
+            ['Breakfast','Lunch','Dinner','Snack'][i] +
+          '</div>' +
+          '<div class="plan-name">' + name + '</div>' +
+          '<div class="plan-arrow">›</div>';
+        card.appendChild(row);
       });
     }
 
@@ -1202,6 +1205,7 @@ function filterChip(btn) {
       picked.forEach(function(c){ c.classList.remove('picked'); });
       renderWeeklyCards();
       renderCalendar(currentCalDay);
+      renderHelperTodayPlan();
       showToast('Added to ' + pendingDay.replace('_',' ') + '!');
       setTimeout(function(){ navTo('screen-employer-home', 'nav-home'); }, 1200);
     }
