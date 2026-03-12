@@ -605,7 +605,16 @@ html, body {
       </div>
       <div class="weekly-card">
         <div class="day-lbl today" data-day="Thu_12">Thu 12</div>
-        <!-- no static rows here — JS renders them -->
+        <div class="meal-row">
+          <div class="mdot" style="background:#2ab5a5"></div>
+          <div class="meal-row-text">Chinese Eggplant with Minced Pork</div>
+          <div class="del-btn"> </div>
+        </div>
+        <div class="meal-row">
+          <div class="mdot" style="background:#f5a623"></div>
+          <div class="meal-row-text">Grilled Steak with Asparagus</div>
+          <div class="del-btn"> </div>
+        </div>
         <div class="day-lbl" data-day="Fri_13">Fri 13</div>
         <div class="add-row" data-day="Fri_13" onclick="openMealSelectForDay('Fri_13')">
           <span>＋</span> Add meal to Fri 13
@@ -1067,7 +1076,7 @@ function switchRole() {
 function switchDetailTab(btn, id) {
   document.querySelectorAll('.tab-btn').forEach(t => { t.className = 'tab-btn off'; });
   btn.className = 'tab-btn on';
-  ['dtab-ov','dtab-ing','dtab-steps'].forEach(i => document.getElementById(i).classList.add('hidden'));
+  ['dtab-ov-1','dtab-ing-1','dtab-steps-1','dtab-ov','dtab-ing','dtab-steps'].forEach(i => document.getElementById(i).classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 }
 function switchHelperTab(btn, id) {
@@ -1146,8 +1155,12 @@ function filterChip(btn) {
               : '<span></span>';
             row.innerHTML = '<div class="mdot" style="background:' + dotColor(i) + '"></div>'
               + '<div class="meal-row-text">' + name + '</div>' + delBtn;
-            if (addRow) card.insertBefore(row, addRow);
-            else lbl.parentNode.appendChild(row);
+            if (addRow) {
+              card.insertBefore(row, addRow);
+            } else {
+              // Insert after the day-lbl (before its next sibling)
+              lbl.parentNode.insertBefore(row, lbl.nextSibling);
+            }
           });
         });
       });
