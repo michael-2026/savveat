@@ -1071,7 +1071,6 @@ function applyRole(r) {
     renderWeeklyCards();
     renderHelperTodayPlan();
     selectRole('employer');
-    applyRole('employer');
 
   }
 }
@@ -1330,6 +1329,7 @@ function showToast(msg) {
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     dateBadge.textContent = days[today.getDay()] + ' ' + today.getDate() + ' ' + months[today.getMonth()];
   }
+  applyRole('employer');
 })();
 </script>
 
